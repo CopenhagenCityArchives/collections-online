@@ -1,15 +1,54 @@
 $heading-adjustment: 2px;
 
+.filterbar {
+  background: $gray-light;
+  min-width: 100%;
+  display: block;
+  height: $topbar-height + 2;
+  &__menu {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: $topbar-height + 2;
+    display: none;
+    width: auto;
+    min-width: 300px;
+    z-index: 10;
+    @include shadow(3);
+    .dropdown {
+      &__options {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+      }
+      &__option {
+        &--active {
+          color: $brand-primary;
+        }
+      }
+    }
+  }
+  &__item {
+    float: left;
+    position: relative;
+  }
+  &__tab {
+    position: relative;
+    z-index: 11;
+    display: inline-block;
+  }
+}
+
 .search-filter-sidebar {
-  margin: 0 $spacer-md * -1 $spacer-md;
-  top: $spacer-lg;
+  background: white;
+  margin: 0;
 
   @media (min-width: $small-size) {
-    margin: $spacer-lg + $spacer-md 0 $spacer-md;
+    margin: 0;
   }
 
   &__heading {
-    background-color: $gray-lighter;
+    background: white;
     font-family: $font-family-medium;
     font-size: 1rem;
     line-height: $spacer-sm * 4;
@@ -70,6 +109,11 @@ $heading-adjustment: 2px;
     }
   }
 
+  &__tab {
+    float: left;
+    background: $gray-light;
+  }
+
   &__dates {
     margin: $spacer-xs;
 
@@ -88,7 +132,7 @@ $heading-adjustment: 2px;
 
   &__filters,
   &__chosen-filters {
-    background-color: rgba($gray-lighter, .5);
+    background-color: rgba(white, .5);
     padding: $spacer-sm;
 
     @media (min-width: $small-size) {
