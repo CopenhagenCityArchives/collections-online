@@ -15,7 +15,6 @@ module.exports = function(parameters) {
   if(config.search.baseQuery) {
     queries.push(config.search.baseQuery);
   }
-
   Object.keys(parameters.filters).forEach(function(field) {
     var filter = config.search.filters[field];
     if(filter) {
@@ -111,6 +110,14 @@ module.exports = function(parameters) {
             'query_string': {
               'query': parameters.filters[field],
               'default_operator': 'OR'
+            }
+          });
+        }
+      } else if(filter.type === 'geobounds') {
+        if(parameters.filters[field]) {
+          queries.push({
+            "geo_bounding_box": {
+              "location": parameters.filters[field]
             }
           });
         }

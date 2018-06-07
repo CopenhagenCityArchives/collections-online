@@ -1,0 +1,37 @@
+.list-view {
+  height: calc(100vh - 268px);
+  overflow: scroll;
+  width: 100%;
+  @include shadow(3);
+  // Do not display list in initial view mode (map).
+  .is-initial-view & {
+    display: none;
+  }
+  // Show when in list view mode.
+  .is-list-view & {
+    display: block;
+  }
+  .is-mobile.is-map-view & {
+    display: none;
+  }
+  // Mobile styling.
+  .has-filter-open & {
+    display: none;
+  }
+  .is-mobile & {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 40px;
+    background: white;
+    overflow: visible;
+    #filters, #results-header {
+      display: none;
+    }
+    .load-more {
+      display: inline-block;
+      margin-bottom: 100px;
+      width: 100%;
+    }
+  }
+}

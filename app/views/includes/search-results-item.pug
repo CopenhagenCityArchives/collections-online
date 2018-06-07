@@ -5,7 +5,7 @@ include ../mixins/icon
 - const mediaTypes = helpers.determineMediaTypes(metadata);
 - const hasMediaType = type => mediaTypes.indexOf(type) !== -1;
 
-a(href=documentURL).search-results-item.col-xs-6.col-sm-4
+a(href=documentURL).search-results-item.col-xs-6.col-sm-6.col-md-3.col-lg-2.col-xl-1
   .search-results-item__squared-container
     img(src=thumbnailURL).search-results-item__squared-image.object-fit
     if hasMediaType('rotation') || hasMediaType('video')

@@ -43,5 +43,7 @@ module.exports = options => {
   require('./dropdown');
   require('./galleries');
 
+  require('./view-mode');
+
   window.helpers = options.helpers;
 };

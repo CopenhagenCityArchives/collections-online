@@ -5,6 +5,13 @@
   position: relative;
   z-index: 10;
 
+  .is-mobile & {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    opacity: 0.95;
+  }
+
   &__logo {
     align-items: center;
     cursor: default; // TODO: Check why?

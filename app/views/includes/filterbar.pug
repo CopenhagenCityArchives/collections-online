@@ -1,0 +1,43 @@
+if config.features.filterSidebar
+  .filterbar
+    .filterbar__item
+      .filterbar__tab
+        h2.search-filter-sidebar__heading.search-filter-sidebar__tab
+          span(data-action='show-filterbar-menu')= 'Filtrering'
+      #sidebar.filterbar__menu.filterbar__menu--filters
+        block sidebar
+    .filterbar__item
+      .filterbar__tab
+        h2.search-filter-sidebar__heading.search-filter-sidebar__tab
+          span(data-action='show-filterbar-menu')= 'Sortering'
+      #sorting-menu.filterbar__menu.filterbar__menu--sorting
+        include search-results-sorting
+    .view-mode
+      .filterbar__item(data-action='show-view-map')
+        .filterbar__tab.filterbar__tab--active
+          h2.search-filter-sidebar__heading.search-filter-sidebar__tab Kort (BETA)
+          +icon('location')
+      .filterbar__item(data-action='show-view-list')
+        .filterbar__tab
+          h2.search-filter-sidebar__heading.search-filter-sidebar__tab Liste
+          +icon('view-thumb')
+  .filterbar--mobile
+    .filterbar--mobile__container
+      .filterbar--mobile__button.filterbar--mobile__button--filters(data-action='show-filterbar-menu')
+        +icon('toggles')
+        h2.search-filter-sidebar__heading.search-filter-sidebar__tab Filter
+      .filterbar--mobile__button.filterbar--mobile__button--list(data-action='show-view-list')
+        +icon('view-thumb')
+        h2.search-filter-sidebar__heading.search-filter-sidebar__tab Liste
+      .filterbar--mobile__button.filterbar--mobile__button--map(data-action='show-view-map')
+        +icon('location')
+        h2.search-filter-sidebar__heading.search-filter-sidebar__tab Kort
+    .filterbar--mobile__container--close
+      .filterbar--mobile__button.filterbar--mobile__button--close(data-action='close-filter-menu')
+        +icon('cross')
+  #sidebarmobile.filterbar__menu.filterbar__menu--filters.search-filter-sidebar
+    block sidebar
+
+.container.filters-mobile
+  #filtersmobile
+    include search-filter-chosen-filters

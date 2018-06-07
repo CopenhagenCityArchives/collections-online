@@ -10,7 +10,7 @@ var elasticsearchQueryBody = require('./es-query-body');
 
 const CREATION_INTERVAL_FROM = 1000; // Year 1000
 const CREATION_INTERVAL_TO = (new Date()).getFullYear(); // Current year
-const SKIP_TYPES = ['querystring', 'date-interval-range'];
+const SKIP_TYPES = ['querystring', 'date-interval-range', 'geobounds'];
 
 function buildFilter(parameters, field) {
   var independentFilters = {};

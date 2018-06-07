@@ -11,16 +11,3 @@ include ../mixins/loader
       else
         | I alt
       +searchCount
-
-  .search-results-header__sorting
-    | Sorteret efter
-    .dropdown#sorting
-      a.dropdown__selected= sortOptions[sorting].label
-      .dropdown__options
-        each val, key in sortOptions
-          - var selected = (key === sorting)
-          a.dropdown__option(
-            href=url,
-            class=selected ? 'dropdown__option--active' : '',
-            data-value=key
-          ) #{val.label}

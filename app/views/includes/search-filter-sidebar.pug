@@ -1,23 +1,7 @@
-include ../mixins/icon
-include ../mixins/search-filter-value
 include ../mixins/search-filter-section
 
 .search-filter-sidebar
-  if filterCount > 0
-    h2.search-filter-sidebar__heading.hidden-xs Valgte filtre
-    .search-filter-sidebar__chosen-filters
-      for values, field in filters
-        if typeof(values) === 'string'
-          - values = [values]
-        for value in values
-          button.btn.btn-primary.btn-close.search-filter-sidebar__filter-btn(
-            data-field=field,
-            data-value=value,
-            data-action='remove-filter')
-            span.search-filter-sidebar__filter-btn-container
-              span.search-filter-sidebar__filter-btn-text
-                +filterValue(field, value)
-              +icon('cross')
+  include search-filter-chosen-filters
   each filter, key in filterLabels
-    if filter.type !== 'querystring'
+    if filter.type !== 'querystring' && filter.type !== 'geobounds'
       +filterSection(filter.singular, filter.plural, key, filter.type)

@@ -1,0 +1,345 @@
+$heading-adjustment: 2px;
+
+.filterbar {
+  background: $gray-light;
+  display: block;
+  height: $topbar-height + 2px;
+  padding: 0 $spacer-md;
+  float: right;
+  .is-mobile & {
+    display: none;
+  }
+  .is-desktop.is-map-view &,
+  .is-initial-view & {
+    width: 100%;
+  }
+  &--mobile {
+    // Don't display the mobile variant on desktop.
+    .is-desktop & {
+      display: none;
+    }
+    // Mobile map view.
+    .is-map-view & {
+      &__button {
+        &--map {
+          display: none;
+        }
+        &--list {
+          display: block;
+        }
+      }
+    }
+    // Mobile list view.
+    .is-list-view & {
+      &__button {
+        &--map {
+          display: block;
+        }
+        &--list {
+          display: none;
+        }
+      }
+    }
+    // Mobile filter/view buttons.
+    position: fixed;
+    bottom: 18px;
+    width: 100%;
+    z-index: 2;
+    margin: 0 auto;
+    height: 0;
+    display: flex;
+    justify-content: center;
+    &__container {
+      background: white;
+      position: relative;
+      bottom: 48px;
+      border-radius: 3px;
+      height: 48px;
+      width: 214px;
+      @include shadow(3);
+      // Do not show standard button container on filter view.
+      .has-filter-open & {
+        display: none;
+      }
+      // Only show close button on filter view.
+      &--close {
+        .has-filter-open & {
+          display: inline-block;
+          position: absolute;
+          bottom: 10px;
+        }
+        display: none;
+      }
+    }
+    &__button {
+      cursor: pointer;
+      display: inline-block;
+      float: left;
+      &:first-of-type {
+        border-right: 1px solid rgba($color: #000000, $alpha: 0.10);
+      }
+      &--close {
+        min-width: 48px;
+        width: 48px;
+        height: 48px;
+        border-radius: 48px;
+        background: white;
+        @include shadow(3);
+      }
+      // Half width of container.
+      min-width: 107px;
+      svg {
+        width: 24px;
+        height: 24px;
+        float: left;
+        margin: 12px;
+      }
+    }
+    .search-filter-sidebar__tab {
+      height: 48px;
+      line-height: 48px;
+      padding: 0;
+    }
+  }
+  .is-map-view &,
+  .is-list-view & {
+    transition: width 500ms ease-in;
+  }
+  .is-list-view & {
+    width: 100%;
+  }
+  &__menu {
+    background: white;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: $topbar-height + 2px;
+    display: none;
+    width: auto;
+    min-width: 300px;
+    z-index: 10;
+    @include shadow(3);
+    .dropdown {
+      padding: 10px;
+      &__options {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        margin-top: 0;
+      }
+      &__option {
+        &--active {
+          color: $brand-primary;
+        }
+      }
+    }
+  }
+  &__item {
+    float: left;
+    position: relative;
+  }
+  &__tab {
+    position: relative;
+    z-index: 11;
+    display: inline-block;
+    padding: 0;
+    background: none;
+    &.expanded {
+      background: white;
+    }
+  }
+  .view-mode {
+    float: right;
+    svg {
+      width: 18px;
+      height: 18px;
+      margin-top: 12px;
+    }
+    .filterbar__item {
+      cursor: pointer;
+      min-width: 80px;
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
+    .filterbar__tab {
+      &--active {
+        height: 42px;
+        border-bottom: 3px solid $brand-primary;
+      }
+    }
+    .search-filter-sidebar__heading {
+      padding-left: 0;
+    }
+  }
+}
+
+.search-filter-sidebar {
+  background: white;
+  margin: 0;
+
+  @media (min-width: $small-size) {
+    margin: 0;
+  }
+
+  &__heading {
+    background: white;
+    font-family: $font-family-medium;
+    font-size: 1rem;
+    line-height: $spacer-sm * 4;
+    margin: 0;
+    padding-left: $spacer-sm + $spacer-xs;
+    padding-right: $spacer-sm + $spacer-xs;
+    user-select: none;
+
+    @media (min-width: $small-size) {
+      font-size: 1.285714286rem; // 18/14
+      padding-bottom: -$heading-adjustment;
+      padding-left: $spacer-sm;
+      padding-right: $spacer-sm;
+      padding-top: $heading-adjustment;
+    }
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    // Used for mobile accordion navigation
+    span {
+      cursor: pointer;
+      display: inline-block;
+      padding-right: $spacer-lg;
+      position: relative;
+      width: 100%;
+
+      &::first-letter {
+        text-transform: uppercase;
+      }
+
+      &::after {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.6 8.6L12 13.2 7.4 8.6 6 10l6 6 6-6z' fill='rgba(0,0,0,0.3)'/%3E%3C/svg%3E");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: $spacer-lg;
+        bottom: $spacer-xs / 2;
+        content: '';
+        position: absolute;
+        right: - $spacer-xs;
+        top: 0;
+        transition: .3s ease;
+        width: $spacer-lg;
+      }
+
+      &.expanded::after {
+        transform: rotate(180deg);
+      }
+
+      &:not(:last-child) {
+        margin-right: $spacer-sm;
+      }
+    }
+  }
+
+  &__tab {
+    float: left;
+    background: none;
+  }
+
+  &__dates {
+    margin: $spacer-xs;
+
+    input {
+      margin-bottom: $spacer-sm;
+    }
+  }
+
+  &__filters {
+    display: none;
+
+    &--expanded {
+      display: block;
+    }
+  }
+
+  &__filters,
+  &__chosen-filters {
+    background-color: rgba(white, .5);
+    padding: $spacer-sm;
+
+    p {
+      margin-left: $spacer-xs;
+      .has-filter-open & {
+        margin-left: 0;
+      }
+    }
+
+    @media (min-width: $small-size) {
+      padding: $spacer-xs;
+      padding-bottom: $spacer-sm;
+    }
+  }
+
+  .filter-text {
+    line-height: 1.4;
+    margin: $spacer-xs;
+  }
+
+  &__filter-btn {
+    margin: $spacer-xs;
+    // expected max-width: 100%; would work, but margin gives issues.
+    max-width: 90%;
+    max-width: calc(100% - #{$spacer-xs * 2});
+
+    .has-filter-open & {
+      &:first-of-type {
+        margin-left: 0;
+      }
+    }
+
+    &:not(:first-child) {
+      margin-top: 0;
+    }
+
+    // See http://stackoverflow.com/questions/35464067/flexbox-not-working-on-button-element-in-some-browsers
+    &-container {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+
+    @if $filter-btn-full-width == true {
+      justify-content: space-between;
+      width: 100%;
+
+      &-text {
+        flex-grow: 1;
+        text-align: left;
+      }
+    }
+
+    &-count,
+    &-text,
+    svg {
+      align-self: center;
+    }
+
+    &-count {
+      font-family: $font-family-light;
+      font-weight: 300;
+      padding-left: $spacer-xs;
+    }
+
+    &-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    svg {
+      flex-shrink: 0;
+      margin: 0 $filter-btn-svg-right-margin 0 .5em;
+    }
+  }
+}

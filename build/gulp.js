@@ -207,16 +207,16 @@ module.exports = (gulp, customizationPath) => {
   });
 
   gulp.task('watch', function() {
-    gulp.watch(STYLES_ALL, ['css']);
-    gulp.watch([SVG_SRC, SVG_SRC_CO], ['svg']);
-    gulp.watch([PUG_SRC_CO, PUG_SRC], ['js']);
+    gulp.watch(STYLES_ALL, { interval: 5000 }, ['css']);
+    gulp.watch([SVG_SRC, SVG_SRC_CO], { interval: 5000 }, ['svg']);
+    gulp.watch([PUG_SRC_CO, PUG_SRC], { interval: 5000 }, ['js']);
     gulp.watch([
       SCRIPTS_ALL,
       SCRIPTS_BROWSERIFY_DIR_CO + '/**/*.js',
       SCRIPTS_BROWSERIFY_DIR + '/**/*.js',
       customizationPath + '/config/**/*',
       customizationPath + '/shared/*.js'
-    ], ['reload-config', 'js']);
+    ], { interval: 5000 }, ['reload-config', 'js']);
   });
 
   gulp.task('clean', function() {

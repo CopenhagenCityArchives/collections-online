@@ -1,0 +1,45 @@
+#sidebarmobile, #filtersmobile {
+  display: none;
+  .has-filter-open & {
+    display: block;
+  }
+}
+
+#sidebarmobile {
+  width: 100%;
+  height: calc(100vh - 40px);
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background: $gray-lighter;
+  z-index: 1;
+  .search-filter-sidebar {
+    &__heading {
+      background: $gray-lighter;
+      color: $gray-darker;
+      font-family: $font-family-light;
+      font-size: 16px;
+      padding-left: 25px;
+      padding-right: 25px;
+      &:first-of-type {
+        padding-top: 30px;
+      }
+    }
+    &__chosen-filters,
+    &__filters {
+      padding: 20px;
+      p {
+        font-size: 16px;
+        color: $gray-darker;
+        font-family: $font-family-light;
+      }
+      &--expanded {
+        background: $gray-lighter;
+      }
+    }
+  }
+}
+
+.filters-mobile {
+  background: white;
+}
