@@ -9,7 +9,11 @@ var mobilecheck = function() {
   return false;
 };
 
-var viewMode = 'map';
+// Set default view mode to list.
+var viewMode = 'list';
+searchController.setViewMode('list');
+
+$('body').addClass(`is-${viewMode}-view`);
 
 $(window).on('resize load ready', function() {
   $('body').removeClass('is-mobile is-desktop');
