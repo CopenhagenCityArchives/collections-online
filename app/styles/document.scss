@@ -209,6 +209,10 @@
       .zoom-out {
         display: none;
       }
+
+      &--rotate {
+        transform: rotate(280deg);
+      }
     }
 
     &--expanded {
