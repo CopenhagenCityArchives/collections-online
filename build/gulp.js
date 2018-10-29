@@ -119,7 +119,27 @@ module.exports = (gulp, customizationPath) => {
       .pipe(gulp.dest(STYLES_DEST));
   });
 
-  gulp.task('js-browserify', ['pug'], function() {
+  gulp.task('svg', function() {
+    return gulp.src([SVG_SRC_CO, SVG_SRC])
+      .pipe(uniqueFiles())
+      .pipe(svgmin())
+      .pipe(rename({prefix: 'icon-'}))
+      .pipe(svgstore())
+      .pipe(gulp.dest(SVG_DEST));
+  });
+
+  gulp.task('pug', function() {
+    return gulp.src([PUG_SRC_CO, PUG_SRC])
+      .pipe(uniqueFiles())
+      .pipe(pug({
+        client: true,
+        compileDebug: isDevelopment,
+        pug: customPug
+      }))
+      .pipe(gulp.dest(PUG_DEST));
+  });
+
+  gulp.task('js-browserify', gulp.series('pug', function(done) {
     return browserify({
       paths: [
         SCRIPTS_BROWSERIFY_DIR,
@@ -136,38 +156,39 @@ module.exports = (gulp, customizationPath) => {
         }
       }
     })
-    .transform('babelify', {
-      // Mapping because of https://github.com/babel/gulp-babel/issues/93,
-      'env': {
-        'production': {
-          'presets': [
-            'babel-preset-latest',
-            //'babel-preset-babili'
-          ].map(require.resolve)
+      .transform('babelify', {
+        // Mapping because of https://github.com/babel/gulp-babel/issues/93,
+        'env': {
+          'production': {
+            'presets': [
+              'babel-preset-latest',
+              //'babel-preset-babili'
+            ].map(require.resolve)
+          },
+          'beta': {
+            'presets': [
+              'babel-preset-latest',
+              //'babel-preset-babili'
+            ].map(require.resolve)
+          }
         },
-        'beta': {
-          'presets': [
-            'babel-preset-latest',
-            //'babel-preset-babili'
-          ].map(require.resolve)
-        }
-      },
-      // Global is needed because JS in collections-online is considered global
-      global: !isDevelopment
-    })
-    .bundle()
-    .on('error', function(err){
-      console.log(err.stack);
-      return notify().write({
-        'title': 'Browserify error',
-        'message': err.message
-      });
-    })
-    .pipe(source('browserify-index.js'))
-    .pipe(gulp.dest(SCRIPTS_DEST));
-  });
+        // Global is needed because JS in collections-online is considered global
+        global: !isDevelopment
+      })
+      .bundle()
+      .on('error', function(err){
+        console.log(err.stack);
+        return notify().write({
+          'title': 'Browserify error',
+          'message': err.message
+        });
+      })
+      .pipe(source('browserify-index.js'))
+      .pipe(gulp.dest(SCRIPTS_DEST))
+      .done();
+  }));
 
-  gulp.task('js', ['js-browserify'], function() {
+  gulp.task('js', gulp.series('js-browserify', function(done) {
     var scriptPaths = SCRIPTS_ARRAY_CO.concat([
       SCRIPTS_DEST + '/browserify-index.js'
     ]);
@@ -211,8 +232,8 @@ module.exports = (gulp, customizationPath) => {
         // we've emitted an "end" - but this is the best we can do for now.
         this.emit('end');
       })
-      .pipe(gulp.dest(PUG_DEST));
-  });
+      .done();
+  }));
 
   gulp.task('watch', function() {
     gulp.watch(STYLES_ALL, { interval: 500 }, ['css']);
